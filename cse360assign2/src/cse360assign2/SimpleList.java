@@ -5,7 +5,7 @@
  * a simple 10 integer array and methods to manipulate the list.
  */
 
-package Assign1;
+package cse360assign2;
 
 import java.lang.*;
 
@@ -13,47 +13,94 @@ public class SimpleList {
 
 	private int list[];
 	private int count;
+	private int listSize;
 	
-	
-	public SimpleList () {
+	/**
+	 * Initializes a list to a length of 10
+	 */
+	public SimpleList() {
 		int LENGTH = 10;
+		this.listSize = LENGTH;
 		this.list = new int[LENGTH];
 		this.count = 0;
 	}
+	/**
+	 * Adds an integer to the front of the list, increases the list size 
+	 * by 50% if the list is at capacity
+	 * 
+	 * @param pInt The integer to be added to the front of the list
+	 * 
+	 */
 	public void add(int pInt) {
+		if (count == listSize) { //Increase Size by 50%
+			listSize = (int)listSize / 2 + (int)listSize;
+			int replaceList[] = new int[count];
+			for(int inc = 0; inc < count; inc ++) {
+				replaceList[inc] = list[inc];
+			}
+			this.list = new int[listSize];
+			for(int inc = 0; inc < count; inc ++) {
+				list[inc] = replaceList[inc]; 
+			}
+		}
 		if (count == 0) {
 			list[0] = pInt;
 		}
 		else {//move all numbers 1 to the right
 			for(int inc = count; inc >= 1; inc--) {
-				if(inc != 10) {
 					list [inc] = list[inc-1];
-				}
 			}
 			list[0] = pInt;
-		}
-		if (count < 10) { // Increment count
-			count++;
-		}
+		}	
+		count++;
+		return;
 	}
+	/**
+	 * Searches for and removes the first instance of an integer
+	 * does nothing if integer is not found
+	 * 
+	 * @param pInt
+	 */
 	public void remove(int pInt) {
 		//find the number and index
 		int index = -1;
-		for(int inc = 0; inc <= 9; inc++) {
+		for(int inc = 0; inc < count; inc++) {
 			if(list[inc] == pInt) {
 				index = inc;
 			}
 		}
 		if (index >= 0) {
-			for(int inc = index; inc < 9; inc++) {
+			for(int inc = index; inc < count - 1; inc++) {
 				list[inc] = list[inc + 1];
 			}
 			count --;
 		}
+		int space = listSize - count;
+		int spaceGoal = listSize / 4;
+		if ( space >= spaceGoal) {
+			listSize = listSize - spaceGoal;
+			int replaceList[] = new int[count];
+			for(int inc = 0; inc < count; inc ++) {
+				replaceList[inc] = list[inc];
+			}
+			this.list = new int[listSize];
+			for(int inc = 0; inc < count; inc ++) {
+				list[inc] = replaceList[inc]; 
+			}
+		}
 	}
+	/**
+	 * Returns the current count of the list
+	 * @return integer count in list
+	 */
 	public int count() {
 		return count;
 	}
+	/**
+	 * Prints out the list as a sting with a space in front of each number
+	 * 
+	 * @return the list as a string
+	 */
 	public String toString() {
 		String str = "";
 		for( int i = 0; i < count; i++) {
@@ -63,6 +110,11 @@ public class SimpleList {
 		
 		return str;
 	}
+	/**
+	 * Searches the list for the first instance of an integer
+	 * @param pInt Integer that is being searched for
+	 * @return index of the integer or -1 if not found
+	 */
 	public int search(int pInt) {
 		int index = -1;
 		for( int inc = 0; inc <= count; inc++) {
@@ -72,6 +124,5 @@ public class SimpleList {
 		}
 		return index;
 	}
-	
 }
 
