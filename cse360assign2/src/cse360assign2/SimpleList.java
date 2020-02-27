@@ -1,7 +1,7 @@
 /*
  * Author: Zoe Zabaleta
  * Class ID: 443
- * Assignment 1 CSE360 Spring 2020
+ * Assignment 2 CSE360 Spring 2020
  * a simple 10 integer array and methods to manipulate the list.
  */
 
@@ -123,6 +123,60 @@ public class SimpleList {
 			}
 		}
 		return index;
+	}
+	/**
+	 * Adds an integer to the end of the list
+	 * @param pInt the integer to be added
+	 */
+	public void append(int pInt) {
+		if (count == listSize) { //Increase Size by 50%
+			listSize = (int)listSize / 2 + (int)listSize;
+			int replaceList[] = new int[count];
+			for(int inc = 0; inc < count; inc ++) {
+				replaceList[inc] = list[inc];
+			}
+			this.list = new int[listSize];
+			for(int inc = 0; inc < count; inc ++) {
+				list[inc] = replaceList[inc]; 
+			}
+		}
+		if (count == 0) {
+			list[0] = pInt;
+		}
+		else {
+			list[count] = pInt;
+		}
+		count++;
+		return;
+		}
+	/**
+	 * returns the first element in the list, returns -1 if list is empty
+	 * @return integer that is the first element
+	 */
+	public int first() {
+		int first = -1;
+		if (count > 0) {
+			first = list[0];
+		}
+		return first;
+	}
+	/**
+	 * Returns the last element on a list, returns -1 if list is empty
+	 * @return integer that is the first element
+	 */
+	public int last() {
+		int last = -1;
+		if (count > 0) {
+			last = list[count - 1];
+		}
+		return last;
+	}
+	/**
+	 * Returns the current size of the list array
+	 * @return size of array as integer
+	 */
+	public int size() {
+		return listSize;
 	}
 }
 
